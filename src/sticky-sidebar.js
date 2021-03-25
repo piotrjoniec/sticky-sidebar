@@ -326,6 +326,9 @@ const StickySidebar = (() => {
         dims.translateY = Math.round(dims.translateY);
   
         dims.lastViewportTop = dims.viewportTop;
+
+        this.lastAffixType = affixType;
+
         return affixType;
       }
 
@@ -355,10 +358,9 @@ const StickySidebar = (() => {
             dims.translateY = dims.containerBottom - sidebarBottom; 
             affixType = 'CONTAINER-BOTTOM';    
 
-          } else if( sidebarBottom + dims.translateY <= colliderBottom ){
+          } else if( sidebarBottom + dims.translateY <= colliderBottom || this.lastAffixType === 'VIEWPORT-BOTTOM' ){
             dims.translateY = colliderBottom - sidebarBottom;
             affixType = 'VIEWPORT-BOTTOM';
-          
           } else if( dims.containerTop + dims.translateY <= colliderTop &&
             (0 !== dims.translateY && dims.maxTranslateY !== dims.translateY) ){
             affixType = 'VIEWPORT-UNBOTTOM';
